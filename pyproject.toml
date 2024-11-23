@@ -18,3 +18,8 @@ gendiff = "gendiff.scripts.gendiff:main"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.2"
+pytest-cov = "^4.1.0"
+flake8 = "^6.1.0"

@@ -10,4 +10,3 @@ def test_compare_flat_json():
         json2 = json.load(f2)
 
     assert json1 != json2
-    
