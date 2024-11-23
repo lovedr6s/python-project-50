@@ -1,35 +1,23 @@
-name: Python CI
+[flake8]
+accept-encodings = utf-8
+max-complexity = 6
+statistics = False
+max-line-length = 80
+enable-extensions = G
+isort-show-traceback = True
 
-on:
-  - push
-  - pull_request
+exclude = .git,__pycache__,.venv,dist,build
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        # we want to test our package on several versions of Python
-        python-version: [3.8, 3.9]
-    steps:
-      - uses: actions/checkout@v4
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
-        with:
-          python-version: ${{ matrix.python-version }}
-        # make depends on poetry
-      - name: Install dependencies
-        run: |
-          pip install poetry
-          make install
-      - name: Run linter and pytest
-        run: |
-          make check
-      - name: Test & publish code coverage
-        uses: paambaati/codeclimate-action@v5.0.0
-        if: github.ref_name == 'main'
-        env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-        with:
-          coverageCommand: make test-coverage
-          debug: true
+ignore =
+  # line break occurred before a binary operator
+  W503
+
+per-file-ignores =
+  # init modules can contain the local imports, logic, unused imports
+  __init__.py: F401
+
+[isort]
+multi_line_output = 3
+include_trailing_comma = true
+default_section = FIRSTPARTY
+line_length = 79
