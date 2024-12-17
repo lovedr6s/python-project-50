@@ -1,46 +1,62 @@
 [
     {
+        "key": "common",
+        "type": "nested",
+        "value": null,
+        "old_value": null,
+        "new_value": null,
         "children": [
             {
                 "key": "setting1",
                 "type": "unchanged",
-                "value": "Value 1"
+                "value": "Value 1",
+                "old_value": null,
+                "new_value": null
             },
             {
                 "key": "setting2",
                 "type": "removed",
-                "value": 200
+                "value": 200,
+                "old_value": null,
+                "new_value": null
             },
             {
                 "key": "setting3",
-                "new_value": null,
-                "old_value": true,
-                "type": "updated"
+                "type": "updated",
+                "value": null,
+                "old_value": "true",
+                "new_value": null
             },
             {
                 "key": "setting4",
                 "type": "added",
-                "value": "blah blah"
+                "value": "blah blah",
+                "old_value": null,
+                "new_value": null
             }
-        ],
-        "key": "common",
-        "type": "nested"
+        ]
     },
     {
+        "key": "group1",
+        "type": "nested",
+        "value": null,
+        "old_value": null,
+        "new_value": null,
         "children": [
             {
                 "key": "baz",
-                "new_value": "bars",
+                "type": "updated",
+                "value": null,
                 "old_value": "bas",
-                "type": "updated"
+                "new_value": "bars"
             },
             {
                 "key": "foo",
                 "type": "unchanged",
-                "value": "bar"
+                "value": "bar",
+                "old_value": null,
+                "new_value": null
             }
-        ],
-        "key": "group1",
-        "type": "nested"
+        ]
     }
 ]

@@ -1,3 +1,4 @@
+from gendiff.formatters.utils import normalize_value
 def format_stylish(diff, depth=0):
     indent = ' ' * (depth * 4)
     lines = []
@@ -9,14 +10,14 @@ def format_stylish(diff, depth=0):
                 children = format_stylish(item['children'], depth + 1)
                 lines.append(f"{indent}  {key}: {{\n{children}\n{indent}  }}")
             case 'added':
-                lines.append(f"{indent}  + {key}: {item['value']}")
+                lines.append(f"{indent}  + {key}: {normalize_value(item['value'])}")
             case 'removed':
-                lines.append(f"{indent}  - {key}: {item['value']}")
+                lines.append(f"{indent}  - {key}: {normalize_value(item['value'])}")
             case 'updated':
-                lines.append(f"{indent}  - {key}: {item['old_value']}")
-                lines.append(f"{indent}  + {key}: {item['new_value']}")
+                lines.append(f"{indent}  - {key}: {normalize_value(item['old_value'])}")
+                lines.append(f"{indent}  + {key}: {normalize_value(item['new_value'])}")
             case 'unchanged':
-                lines.append(f"{indent}    {key}: {item['value']}")
+                lines.append(f"{indent}    {key}: {normalize_value(item['value'])}")
 
     return '\n'.join(lines)
 

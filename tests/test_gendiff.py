@@ -36,7 +36,7 @@ def test_json_json():
     expected_output = read_file(FIXTURES_PATH / "expected_json_json.json")
 
     diff = generate_diff(file1, file2, format_name='json')
-    assert diff == expected_output
+    assert json.loads(diff) == json.loads(expected_output)
 
 def test_yaml_stylish():
     file1 = str(FIXTURES_PATH / "file1.yml")

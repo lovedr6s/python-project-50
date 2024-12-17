@@ -1,5 +1,7 @@
 import json
+from gendiff.formatters.utils import normalize_diff
 
 
 def json_format(diff):
-    return json.dumps(diff, indent=2, sort_keys=True)
+    normalized_diff = normalize_diff(diff)
+    return json.dumps(normalized_diff, indent=4)
