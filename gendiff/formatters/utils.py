@@ -11,16 +11,15 @@ def normalize_value(value):
 
 
 def normalize_stylish_value(value):
-    """Нормализует значения для stylish форматтера."""
-    if isinstance(value, dict):
+    if isinstance(value, dict):  # Сложные объекты
         return '[complex value]'
-    elif isinstance(value, bool):
+    elif isinstance(value, bool):  # Булевы значения
         return str(value).lower()
-    elif value is None:
+    elif value is None:  # Null значение
         return 'null'
-    elif isinstance(value, str):  # Добавляем кавычки вокруг строк
+    elif isinstance(value, str):  # Строки в кавычках
         return f"'{value}'"
-    return value
+    return value  # Оставляем всё остальное как есть
 
 
 def normalize_value_json(value):
