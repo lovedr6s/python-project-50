@@ -22,7 +22,7 @@ def format_stylish(diff, depth=0):
                 lines.append(f"{indent}    {key}: {normalize_stylish_value(item['value'])}")
 
     return '\n'.join(lines)
-
+#
 
 def stylish(diff):
     return '{\n' + format_stylish(diff) + '\n}'
