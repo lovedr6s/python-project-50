@@ -1,6 +1,6 @@
 from pathlib import Path
 import json
-from gendiff_code.generate_diff import generate_diff
+from gendiff.scripts.generate_diff import generate_diff
 
 
 FIXTURES_PATH = Path("tests/fixtures")
