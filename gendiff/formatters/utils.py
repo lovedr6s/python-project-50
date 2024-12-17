@@ -9,11 +9,26 @@ def normalize_value(value):
         return f"'{value}'"
     return value
 
+
+def normalize_stylish_value(value):
+    """Нормализует значения для stylish форматтера."""
+    if isinstance(value, dict):
+        return '[complex value]'
+    elif isinstance(value, bool):
+        return str(value).lower()
+    elif value is None:
+        return 'null'
+    elif isinstance(value, str):  # Добавляем кавычки вокруг строк
+        return f"'{value}'"
+    return value
+
+
 def normalize_value_json(value):
     """Приводит значения к JSON-совместимому формату."""
     if isinstance(value, bool):
         return str(value).lower()
     return value
+
 
 def normalize_diff(diff):
     """Рекурсивно нормализует diff."""
