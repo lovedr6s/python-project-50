@@ -1,9 +1,9 @@
 import json
 import yaml
-from gendiff.diff_builder import build_diff
-from gendiff.formatters.stylish import stylish
-from gendiff.formatters.plain import plain
-from gendiff.formatters.json import json_format
+from gendiff_code.diff_builder import build_diff
+from gendiff_code.formatters.stylish import stylish
+from gendiff_code.formatters.plain import plain
+from gendiff_code.formatters.json import json_format
 
 
 def parse_file(filepath):
