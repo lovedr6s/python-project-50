@@ -10,7 +10,7 @@ packages = [
 
 [tool.poetry.dependencies]
 python = ">=3.8.1"
-pyyaml = "^6.0.2"
+pyyaml = "6.0.2"
 
 [tool.poetry.scripts]
 gendiff = "gendiff.scripts.gendiff:main"
@@ -21,7 +21,6 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.group.dev.dependencies]
-pytest = "^7.4.2"
-pytest-cov = "^4.1.0"
-flake8 = "^6.1.0"
-pyyaml = "^6.0.2"
+pytest = "7.4.2"
+pytest-cov = "4.1.0"
+flake8 = "6.1.0"
