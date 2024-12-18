@@ -1,9 +1,9 @@
 def normalize_value(value):
     if isinstance(value, bool):
-        return str(value).lower()  # True -> "true", False -> "false"
+        return str(value).lower()
     if value is None:
-        return 'null'  # None -> "null"
-    if isinstance(value, dict):  # Для [complex value]
+        return 'null'
+    if isinstance(value, dict):
         return '[complex value]'
     if isinstance(value, str):
         return f"'{value}'"
@@ -11,26 +11,26 @@ def normalize_value(value):
 
 
 def normalize_stylish_value(value):
-    if isinstance(value, dict):  # Сложные объекты
+    if isinstance(value, dict):
         return '[complex value]'
-    elif isinstance(value, bool):  # Булевы значения
+    elif isinstance(value, bool):
         return str(value).lower()
-    elif value is None:  # Null значение
+    elif value is None:
         return 'null'
-    elif isinstance(value, str):  # Строки в кавычках
+    elif isinstance(value, str):
         return f"'{value}'"
-    return value  # Оставляем всё остальное как есть
+    return value 
 
 
 def normalize_value_json(value):
-    """Приводит значения к JSON-совместимому формату."""
     if isinstance(value, bool):
         return str(value).lower()
+    elif value is None:
+        return 'null'
     return value
 
 
 def normalize_diff(diff):
-    """Рекурсивно нормализует diff."""
     result = []
     for item in diff:
         normalized_item = {
