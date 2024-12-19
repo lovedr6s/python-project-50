@@ -10,7 +10,7 @@ def tree_view(diff, depth=1):
     result = '\n'.join(lines)
     return result
 
-
+#
 def create_formatted_line(lines, key, value, depth, type):
     prefix = '  '
     if type == 'nested':
