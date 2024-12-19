@@ -1,6 +1,5 @@
 
 def get_plain(diff, path=''):
-    '''stylizes diff'''
     result = []
     for node in diff:
         name = f'{path}{node["key"]}'
@@ -17,7 +16,6 @@ def get_plain(diff, path=''):
 
 
 def select_type(node):
-    '''select type of key values for get_plain'''
     if isinstance(node, str):
         return f"'{node}'"
     elif isinstance(node, dict) or isinstance(node, list):

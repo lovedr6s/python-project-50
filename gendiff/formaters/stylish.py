@@ -1,5 +1,4 @@
 def get_stylish(diff, level=0):
-    '''stylizes diff.'''
     result = []
     for node in diff:
         if node['status'] == 'added':
@@ -22,7 +21,6 @@ def get_stylish(diff, level=0):
 
 
 def get_lines(level, string, sign, func):
-    '''forms strings for get_stylish.'''
     line = ''
     line += f'{"    " * level + sign}{string["key"]}: '
     line += f'{func(string["value"], level)}'
@@ -30,7 +28,6 @@ def get_lines(level, string, sign, func):
 
 
 def inner(node, level):
-    '''brings the key values from get_stylish to the desired form.'''
     container = ''
     if isinstance(node, list):
         new_node = get_stylish(node, level + 1)

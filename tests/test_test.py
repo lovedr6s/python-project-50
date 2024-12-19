@@ -29,7 +29,6 @@ flat_yaml_plain = 'tests/fixtures/flat_json_result.txt'
         ]
     )
 def test_generate_diff(filepath1, filepath2, formater, diff):
-    '''tests function generate_diff with different files.'''
     result = generate_diff(filepath1, filepath2, formater)
     for lines in open(diff):
         list_of_lines = []
