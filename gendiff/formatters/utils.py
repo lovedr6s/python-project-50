@@ -16,9 +16,9 @@ def normalize_stylish_value(value):
     elif isinstance(value, bool):
         return str(value).lower()
     elif value is None:
-        return 'null'
+        return 'none'
     elif isinstance(value, str):
-        return f"'{value}'"
+        return f"{value}"
     return value 
 
 
