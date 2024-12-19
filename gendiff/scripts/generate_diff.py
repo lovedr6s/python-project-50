@@ -3,7 +3,7 @@ import yaml
 from gendiff.scripts.diff_builder import build_diff
 from gendiff.formatters.stylish import stylish
 from gendiff.formatters.plain import plain
-from gendiff.formatters.json import json_format
+from gendiff.formatters.json import json_formatter
 
 
 def parse_file(filepath):
