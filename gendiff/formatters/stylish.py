@@ -1,67 +1,59 @@
-def stylish(diff):
-    result = '{\n' + tree_view(diff) + '\n}'
-    return result
+#!usr/bin/env python3
+from .converter import get_value_repr
+INDENT, SIGN_PLACE, SIGN_ADD, SIGN_REMOVE = "  ", "  ", "+ ", "- "
 
 
-def tree_view(diff, depth=1):
-    lines = []
-    for key, (type, value) in sorted(diff.items()):
-        lines = create_formatted_line(lines, key, value, depth, type)
-    result = '\n'.join(lines)
-    return result
-
-#
-def create_formatted_line(lines, key, value, depth, type):
-    prefix = '  '
-    if type == 'nested':
-        indent = (4 * depth - 2) * ' '
-        child_diff = tree_view(value, depth + 1)
-        formated_value = f'{{\n{child_diff}\n{indent}  }}'
-        lines = add_indent_and_format(depth, lines, prefix, key, formated_value)
-    elif type == 'changed':
-        lines = changed_data_diff(lines, value, depth, key)
-    elif type == 'added':
-        prefix = '+ '
-        lines = add_indent_and_format(depth, lines, prefix, key, value)
-    elif type == 'removed':
-        prefix = '- '
-        lines = add_indent_and_format(depth, lines, prefix, key, value)
-    else:
-        lines = add_indent_and_format(depth, lines, prefix, key, value)
-    return lines
+# def get_value_repr(value) -> str:
+#     if value is None:
+#         return 'null'
+#     if isinstance(value, bool) and value:
+#         return 'true'
+#     if isinstance(value, bool) and not value:
+#         return 'false'
+#     return value
 
 
-def add_indent_and_format(depth, lines, prefix, key, value):
-    formated_value = format_value(value, depth + 1)
-    indent = (4 * depth - 2) * ' '
-    lines.append(f"{indent}{prefix}{key}: {formated_value}")
-    return lines
+def stylish(diff: dict, file_path1: str, file_path2: str) -> str: # noqa C901
 
+    elements = [f'gendiff {file_path1} {file_path2}']
 
-def format_value(value, depth):
-    if isinstance(value, dict):
-        prefix = '  '
-        lines = ['{']
-        for key, val in value.items():
-            formated_value = format_value(val, depth + 1)
-            lines = add_indent_and_format(depth, lines,
-                                          prefix, key, formated_value)
-        indent = ' ' * (4 * (depth - 1))
-        lines.append(f"{indent}")
-        return '\n'.join(lines)
-    elif isinstance(value, bool):
-        return str(value).lower()
-    elif value is None:
-        return 'null'
-    elif isinstance(value, str):
-        return value
-    return str(value)
+    def add_node(node: dict, indent: int, prefix='', old_shift='') -> None:
+        def add_pair(shift, sign, key, value):
+            if isinstance(value, dict):
+                add_node(value, indent + 1, f'{shift}{sign}{key}: ', shift)
+            else:
+                elements.append(f'{shift}{sign}{key}: {get_value_repr(value)}')
 
+        elements.append(prefix + '{')
+        shift = INDENT * indent + SIGN_PLACE * (indent - 1)
+        keys = sorted(node)
+        for key in keys:
 
-def changed_data_diff(lines, value, depth, key):
-    old, new = value
-    old_new_pairs = [('- ', old), ('+ ', new)]
-    for prefix, value in old_new_pairs:
-        formated_value = format_value(value, depth + 1)
-        lines = add_indent_and_format(depth, lines, prefix, key, formated_value)
-    return lines
+            value = node[key]
+            if isinstance(value, list):
+                first, second = value
+                if first == second:
+                    add_pair(shift, SIGN_PLACE, key, first)
+                else:
+                    if not isinstance(first, tuple):
+                        add_pair(shift, SIGN_REMOVE, key, first)
+                    if not isinstance(second, tuple):
+                        add_pair(shift, SIGN_ADD, key, second)
+
+            elif isinstance(value, dict):
+                add_node(
+                    value,
+                    indent + 1,
+                    f'{shift}{SIGN_PLACE}{key}: ',
+                    shift
+                )
+            else:
+                add_pair(shift, SIGN_PLACE, key, value)
+
+        if len(prefix) == 0:
+            elements.append('}')
+        else:
+            elements.append(f'{old_shift}{SIGN_PLACE}' + '}')
+
+    add_node(diff, 1)
+    return '\n'.join(elements)

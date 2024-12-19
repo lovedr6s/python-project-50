@@ -1,4 +1,0 @@
-Property 'common.setting2' was removed
-Property 'common.setting3' was updated. From true to null
-Property 'common.setting4' was added with value: 'blah blah'
-Property 'group1.baz' was updated. From 'bas' to 'bars'
