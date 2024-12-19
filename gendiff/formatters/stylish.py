@@ -5,22 +5,11 @@ def stylish(diff):
 
 def tree_view(diff, depth=1):
     lines = []
-    for item in diff:
-        if isinstance(item, dict):
-            key = item.get('key')
-            type = item.get('type')
-            value = item.get('value')
-            children = item.get('children')
-
-            # Добавьте обработку детей, если они есть
-            if children:
-                value = tree_view(children, depth + 1)
-            
-            lines = create_formatted_line(lines, key, value, depth, type)
-        else:
-            raise ValueError("Each item in 'diff' must be a dictionary.")
+    for key, (type, value) in sorted(diff.items()):
+        lines = create_formatted_line(lines, key, value, depth, type)
     result = '\n'.join(lines)
     return result
+
 
 def create_formatted_line(lines, key, value, depth, type):
     prefix = '  '
@@ -58,7 +47,7 @@ def format_value(value, depth):
             lines = add_indent_and_format(depth, lines,
                                           prefix, key, formated_value)
         indent = ' ' * (4 * (depth - 1))
-        lines.append(f"{indent}}}")
+        lines.append(f"{indent}")
         return '\n'.join(lines)
     elif isinstance(value, bool):
         return str(value).lower()
