@@ -11,6 +11,7 @@ def parsearguments():
                         default="stylish")
     return parser.parse_args()
 
+
 def main():
     args = parsearguments()
     print(generate_diff(args.first_file, args.second_file, args.format))
