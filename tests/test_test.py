@@ -3,6 +3,7 @@ from gendiff import generate_diff
 
 BASE_PATH = "tests/fixtures/"
 
+
 @pytest.mark.parametrize(
     "filepath1, filepath2, formater, diff", 
     [
@@ -44,6 +45,8 @@ BASE_PATH = "tests/fixtures/"
         ),
     ]
 )
+
+
 def test_generate_diff(filepath1, filepath2, formater, diff):
     result = generate_diff(filepath1, filepath2, formater)
     with open(diff, 'r') as file:
@@ -53,6 +56,3 @@ def test_generate_diff(filepath1, filepath2, formater, diff):
     print("Expected:")
     print(expected_result)
     assert result.strip() == expected_result.strip()
-
-
-
