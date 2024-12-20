@@ -45,8 +45,6 @@ BASE_PATH = "tests/fixtures/"
         ),
     ]
 )
-
-
 def test_generate_diff(filepath1, filepath2, formater, diff):
     result = generate_diff(filepath1, filepath2, formater)
     with open(diff, 'r') as file:
