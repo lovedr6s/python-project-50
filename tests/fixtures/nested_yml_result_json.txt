@@ -31,13 +31,9 @@
             },
             {
                 "key": "setting5",
-                "value": [
-                    {
-                        "key": "key5",
-                        "value": "value5",
-                        "status": "unupdated"
-                    }
-                ],
+                "value": {
+                    "key5": "value5"
+                },
                 "status": "added"
             },
             {
@@ -97,52 +93,24 @@
     },
     {
         "key": "group2",
-        "value": [
-            {
-                "key": "abc",
-                "value": 12345,
-                "status": "unupdated"
-            },
-            {
-                "key": "deep",
-                "value": [
-                    {
-                        "key": "id",
-                        "value": 45,
-                        "status": "unupdated"
-                    }
-                ],
-                "status": "unupdated"
+        "value": {
+            "abc": 12345,
+            "deep": {
+                "id": 45
             }
-        ],
+        },
         "status": "deleted"
     },
     {
         "key": "group3",
-        "value": [
-            {
-                "key": "deep",
-                "value": [
-                    {
-                        "key": "id",
-                        "value": [
-                            {
-                                "key": "number",
-                                "value": 45,
-                                "status": "unupdated"
-                            }
-                        ],
-                        "status": "unupdated"
-                    }
-                ],
-                "status": "unupdated"
+        "value": {
+            "deep": {
+                "id": {
+                    "number": 45
+                }
             },
-            {
-                "key": "fee",
-                "value": 100500,
-                "status": "unupdated"
-            }
-        ],
+            "fee": 100500
+        },
         "status": "added"
     }
 ]
