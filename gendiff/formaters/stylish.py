@@ -34,8 +34,8 @@ def format_value(value, level):
         lines = ['{']
         for key, val in value.items():
             formatted_val = format_value(val, level + 1)
-            lines.append(f'{"    " * (level)}{key}: {formatted_val}')
-        lines.append(f'{"    " * (level - 1)}}}')
+            lines.append(f'{"    " * (level + 1)}{key}: {formatted_val}')
+        lines.append(f'{"    " * level}}}')
         return '\n'.join(lines)
     if isinstance(value, bool):
         return str(value).lower()
