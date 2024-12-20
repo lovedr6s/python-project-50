@@ -1,47 +1,44 @@
 def get_stylish(diff, level=0):
-    result = []
+    result = ['{']
     for node in diff:
-        if node['status'] == 'added':
-            result.append(get_lines(level, node, '  + ', inner))
-        elif node['status'] == 'unupdated':
-            result.append(get_lines(level, node, '    ', inner))
-        elif node['status'] == 'deleted':
-            result.append(get_lines(level, node, '  - ', inner))
-        elif node['status'] == 'changed':
-            node['value'] = node['old_value']
-            result.append(get_lines(level, node, '  - ', inner))
-            node['value'] = node['new_value']
-            result.append(get_lines(level, node, '  + ', inner))
-        else:
-            result.append(get_lines(level + 1, node, '', get_stylish))
-    result.append(f'{"    " * level}{"}"}')
-    level -= 1
-    final_result = '\n'.join(result)
-    return f'{"{"}\n{final_result}'
+        key = node['key']
+        status = node['status']
+        value = node.get('value', None)
+
+        if status == 'added':
+            result.append(get_line(level, key, value, '  + '))
+        elif status == 'unupdated':
+            result.append(get_line(level, key, value, '    '))
+        elif status == 'deleted':
+            result.append(get_line(level, key, value, '  - '))
+        elif status == 'changed':
+            old_value = node['old_value']
+            new_value = node['new_value']
+            result.append(get_line(level, key, old_value, '  - '))
+            result.append(get_line(level, key, new_value, '  + '))
+        elif status == 'nested':
+            nested_value = get_stylish(value, level + 1)
+            result.append(f'{"    " * level}    {key}: {nested_value}')
+    
+    result.append(f'{"    " * level}}}')
+    return '\n'.join(result)
 
 
-def get_lines(level, string, sign, func):
-    line = ''
-    line += f'{"    " * level + sign}{string["key"]}: '
-    line += f'{func(string["value"], level)}'
-    return line
+def get_line(level, key, value, sign):
+    formatted_value = format_value(value, level + 1)
+    return f'{"    " * level}{sign}{key}: {formatted_value}'
 
 
-def inner(node, level):
-    container = ''
-    if isinstance(node, list):
-        new_node = get_stylish(node, level + 1)
-        return str(new_node)
-    if isinstance(node, dict):
-        level += 1
-        for key, value in node.items():
-            new_value = inner(value, level)
-            container += f'\n    {"    " * level}{key}: {new_value}'
-        return '{' + container + '\n' + '    ' * level + '}'
-    if isinstance(node, bool):
-        return str(node).lower()
-    if node is None:
-        node = 'null'
-        return node
-    else:
-        return node
+def format_value(value, level):
+    if isinstance(value, dict):
+        lines = ['{']
+        for key, val in value.items():
+            formatted_val = format_value(val, level + 1)
+            lines.append(f'{"    " * (level)}{key}: {formatted_val}')
+        lines.append(f'{"    " * (level - 1)}}}')
+        return '\n'.join(lines)
+    if isinstance(value, bool):
+        return str(value).lower()
+    if value is None:
+        return 'null'
+    return str(value)
