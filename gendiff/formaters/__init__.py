@@ -3,13 +3,19 @@ from gendiff.formaters.plain import get_plain as plain
 from gendiff.formaters.stylish import get_stylish as stylish
 
 
-def select_formater(format_name):
-    '''select formater for generate_diff function'''
-    if format_name == 'stylish':
-        return stylish
-    elif format_name == 'plain':
-        return plain
-    elif format_name == 'json':
-        return json
-    else:
-        raise Exception('wrong format!')
+def select_formatter(format_name):
+    formatters = {
+        'stylish': stylish,
+        'plain': plain,
+        'json': json,
+    }
+    
+    if format_name not in formatters:
+        raise ValueError(f"Unsupported format: {format_name}")
+    
+    return formatters[format_name]
+
+
+def apply_formatter(content, format_name):
+    formatter = select_formatter(format_name)
+    return formatter(content)

@@ -4,13 +4,17 @@ def get_plain(diff, path=''):
     for node in diff:
         name = f'{path}{node["key"]}'
         if node['status'] == 'added':
-            result.append(f"Property '{name}' was added with value: {select_type(node['value'])}")  # noqa: E501
+            value = select_type(node['value'])
+            result.append(f"Property '{name}' was added with value: {value}")
         elif node['status'] == 'deleted':
             result.append(f"Property '{name}' was removed")
         elif node['status'] == 'changed':
-            result.append(f"Property '{name}' was updated. From {select_type(node['old_value'])} to {select_type(node['new_value'])}")  # noqa: E501
+            old_value = select_type(node['old_value'])
+            new_value = select_type(node['new_value'])
+            result.append(f"Property '{name}' was updated. From {old_value} to {new_value}")
         elif node['status'] == 'nested':
-            result.append(f'{get_plain(node["value"], path=name + ".")}')
+            nested_result = get_plain(node["value"], path=name + ".")
+            result.append(nested_result)
     final_result = '\n'.join(result)
     return final_result
 
