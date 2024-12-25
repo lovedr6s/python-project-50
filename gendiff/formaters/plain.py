@@ -14,7 +14,7 @@ def get_plain(diff, path=''):
             result.append(
                 f"Property '{name}' was updated. From {old_value} "
                 f"to {new_value}"
-                )
+            )
         elif node['status'] == 'nested':
             nested_result = get_plain(node["value"], path=name + ".")
             result.append(nested_result)

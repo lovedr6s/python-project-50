@@ -9,10 +9,8 @@ def select_formatter(format_name):
         'plain': plain,
         'json': json,
     }
-    
     if format_name not in formatters:
         raise ValueError(f"Unsupported format: {format_name}")
-    
     return formatters[format_name]
 
 

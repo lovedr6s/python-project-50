@@ -14,12 +14,16 @@ def build_diff_tree(dict1, dict2):
                         'status': 'unupdated',
                     },
                 )
-            elif isinstance(dict1[current_key], dict) and isinstance(dict2[current_key], dict):
+            elif (
+                isinstance(dict1[current_key], dict)
+                and isinstance(dict2[current_key], dict)
+            ):
                 diff_result.append(
                     {
                         'key': current_key,
                         'status': 'nested',
-                        'value': build_diff_tree(dict1[current_key], dict2[current_key]),
+                        'value': build_diff_tree(dict1[current_key],
+                                                 dict2[current_key]),
                     },
                 )
             else:
