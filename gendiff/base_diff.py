@@ -1,49 +1,50 @@
-def diff(d1, d2):
-    keys1 = set(d1.keys())
-    keys2 = set(d2.keys())
-    all_keys = keys1 | keys2
-    result = []
-    for key in sorted(all_keys):
-        if key in keys1 and key in keys2:
-            if d1[key] == d2[key]:
-                result.append(
+def build_diff_tree(dict1, dict2):
+    keys_old = set(dict1.keys())
+    keys_new = set(dict2.keys())
+    combined_keys = keys_old | keys_new
+    diff_result = []
+
+    for current_key in sorted(combined_keys):
+        if current_key in keys_old and current_key in keys_new:
+            if dict1[current_key] == dict2[current_key]:
+                diff_result.append(
                     {
-                        'key': key,
-                        'value': d1[key],
+                        'key': current_key,
+                        'value': dict1[current_key],
                         'status': 'unupdated',
                     },
                 )
-            elif isinstance(d1[key], dict) and isinstance(d2[key], dict):
-                result.append(
+            elif isinstance(dict1[current_key], dict) and isinstance(dict2[current_key], dict):
+                diff_result.append(
                     {
-                        'key': key,
+                        'key': current_key,
                         'status': 'nested',
-                        'value': diff(d1[key], d2[key]),
+                        'value': build_diff_tree(dict1[current_key], dict2[current_key]),
                     },
                 )
             else:
-                result.append(
+                diff_result.append(
                     {
-                        'key': key,
+                        'key': current_key,
                         'status': 'changed',
-                        'old_value': d1[key],
-                        'new_value': d2[key],
+                        'old_value': dict1[current_key],
+                        'new_value': dict2[current_key],
                     },
                 )
-        elif key in keys2:
-            result.append(
+        elif current_key in keys_new:
+            diff_result.append(
                 {
-                    'key': key,
-                    'value': d2[key],
+                    'key': current_key,
+                    'value': dict2[current_key],
                     'status': 'added',
                 },
             )
         else:
-            result.append(
+            diff_result.append(
                 {
-                    'key': key,
-                    'value': d1[key],
+                    'key': current_key,
+                    'value': dict1[current_key],
                     'status': 'deleted',
                 },
             )
-    return result
+    return diff_result
