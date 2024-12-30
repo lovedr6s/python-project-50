@@ -24,3 +24,6 @@ build-backend = "poetry.core.masonry.api"
 pytest = "7.4.2"
 pytest-cov = "4.1.0"
 flake8 = "6.1.0"
+
+[tool.pytest.ini_options]
+addopts = "--cov=hexlet_python_package --cov-report=xml"

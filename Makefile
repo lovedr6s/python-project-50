@@ -10,7 +10,7 @@ test:
 
 # Run tests with coverage report
 test-coverage:
-	poetry run pytest --cov=hexlet_python_package --cov-report=xml:coverage.xml
+	poetry run pytest --cov=gendiff --cov-report=xml:coverage.xml
 
 # Run linter
 lint:
