@@ -4,7 +4,6 @@ from gendiff.generate_difference import generate_diff
 
 def main():
     args = get_args()
-    print(args.format)
     print(generate_diff(args.first_file, args.second_file, args.format))
 
 
