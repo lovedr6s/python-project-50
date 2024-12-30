@@ -1,0 +1,3 @@
+ADDED = "  + "
+REMOVED = "  - "
+INDENT = "    "

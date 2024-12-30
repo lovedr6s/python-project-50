@@ -1,6 +1,4 @@
-ADDED = "  + "
-REMOVED = "  - "
-INDENT = "    "
+from .constants import ADDED, REMOVED, INDENT
 
 
 def get_stylish(diff, level=0):
