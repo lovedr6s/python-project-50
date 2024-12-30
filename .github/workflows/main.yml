@@ -31,9 +31,11 @@ jobs:
 
       - name: Test & publish code coverage
         uses: paambaati/codeclimate-action@v9.0.0
-        if: github.ref_name == 'main'
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
           coverageCommand: make test-coverage
           debug: true
+        run: |
+          ./cc-reporter format-coverage --input-type coverage.py --output coverage.xml
+          ./cc-reporter after-build --exit-code $?
